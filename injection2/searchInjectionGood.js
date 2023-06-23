@@ -12,5 +12,5 @@ userRoutes.route('/search').post(function(req, res) {
 });
 
 
-//What if we wanted to make sure it was a number? 
+//What if we wanted to make sure it was alphanumeric? 
 //what about a date?
