@@ -2,16 +2,18 @@ const sanitize = require('mongo-sanitize');
 const validator = require('validator');
 
 userRoutes.route('/search').post(function(req, res) {
-    let search = String(req.query.search);
+    const validatedQuery = validator.isAlphanumeric(req.query.search) // should return true
+    let search = sanitize(req.query.search);
     let query = {plants: search}
-
-    db.collection('plants').find(query, function (err, plants) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.render('plants', { title: 'Plants', plants: plants });
-        }
-    });
+    if(validatedQuery){
+        db.collection('plants').find(query, function (err, plants) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.render('plants', { title: 'Plants', plants: plants });
+            }
+        });
+    }
 });
 
 
